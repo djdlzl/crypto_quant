@@ -9,10 +9,11 @@ class UpbitAPI:
         endpoint = "/v1/accounts"
         return self.auth.request_get(endpoint)
 
-    def get_market_all(self):
+    def get_market_all(self, is_details=False):
         """마켓 코드 조회"""
         endpoint = "/v1/market/all"
-        return self.auth.request_get(endpoint)
+        params = {'isDetails': 'true' if is_details else 'false'}
+        return self.auth.request_get(endpoint, params)
 
     def get_ticker(self, markets):
         """현재가 정보"""

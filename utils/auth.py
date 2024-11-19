@@ -18,8 +18,12 @@ class UpbitAuth:
         }
 
         if query is not None:
-            query_string = urlencode(query)
-            payload['query'] = query_string
+            # query가 bool 타입으로 전달되는 문제 해결
+            if isinstance(query, bool):
+                query = {}
+            # query가 딕셔너리가 아닌 경우 처리
+            elif not isinstance(query, dict):
+                query = dict(query)
 
         jwt_token = jwt.encode(payload, self.secret_key)
         return jwt_token
